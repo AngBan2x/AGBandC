@@ -9,7 +9,7 @@ variables*/
 void main (){
     int v1, v2;
     printf("INTERCAMBIO DE DOS VARIABLES \n \n");
-    printf("Inserte un numero para la primera variable> \n");
+    printf("Inserte un numero para la primera variable: \n");
     scanf("%i", &v1);
     printf("Inserte un numero para la segunda variable: \n");
     scanf("%i", &v2);
