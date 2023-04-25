@@ -7,7 +7,7 @@ float suma(float a, float b);
 float resta(float a, float b);
 float prod(float a, float b);
 float division(float a, float b);
-float valexc(float *num, float exc);                            //validar un numero en base a la exclusion a otro numero
+float valexc(float num, float exc);                            //validar un numero en base a la exclusion a otro numero
 int valmin(int *num, int *liminf);                         //validar un numero en base a un limite inferior
 int valminmax(int *num, int *liminf, int *limsup);          //validar un numero en base a un limite superior e inferior
 void menu();
@@ -77,17 +77,19 @@ void main(){
             scanf("%f", &d1);
 
             printf("Inserte el divisor: ");
-            valexc(&d2, cero);
+            d2 = valexc(d2, cero);
+            float coc = division(d1, d2);
 
-            printf("El cociente: %f / %f = %f\n", d1, d2, division(d1, d2));
+            printf("El cociente: %f / %f = %f\n", d1, d2, coc);
             break;
         }
         if (opcion!=0){
-            printf("Quieres seguir? (s/n): ");
-        
+            printf("Quieres realizar mas calculos? (s/n): ");
             repetir = valrepetir('s', 'n');
+            fflush(stdin);
             if ((repetir == 'n')){
-                printf("Adios!\n");
+                fflush(stdin);
+                printf("\nAdios!\n");
                 break;}
         }
     }while((repetir == 's')&&(opcion!=0));
@@ -114,12 +116,14 @@ float division(float a, float b){
     return res;
 }
 
-float valexc(float *num, float exc){
-    do{
-        scanf("%d", num);
-        if(*num == exc) printf("No es un numero valido!\nInserta un numero valido: ");
-    }while(*num == exc);
-    return *num;
+float valexc(float num, float exc){
+    do
+    {
+        scanf("%f", &num);
+        if(num == exc) printf ("No es un numero valido, inserte un numero valido");
+    } while (num == exc);
+    
+    return num;
 }
 
 int valmin(int *num, int *liminf){
@@ -143,10 +147,13 @@ char valrepetir(char si, char no){
     char repetir;
     do
     {
-        scanf("%c", &repetir);
-        if(repetir != si || repetir != no)
-        {printf("Solo puede ser %c o %c: ", si, no);}
+        fflush(stdin);
+        scanf("%c", &repetir); 
+        fflush(stdin);
+        if(repetir != si && repetir != no)
+        {printf("Solo puede ser %c o %c: ", si, no); fflush(stdin);}
     } while (repetir != si && repetir != no);
+    fflush(stdin);
     return repetir;
 }
 
