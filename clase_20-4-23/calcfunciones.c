@@ -7,9 +7,9 @@ float suma(float a, float b);
 float resta(float a, float b);
 float prod(float a, float b);
 float division(float a, float b);
-float valexc(float num, float exc);                            //validar un numero en base a la exclusion a otro numero
+float valexc(float num, float exc);                        //validar un numero en base a la exclusion a otro numero
 int valmin(int *num, int *liminf);                         //validar un numero en base a un limite inferior
-int valminmax(int *num, int *liminf, int *limsup);          //validar un numero en base a un limite superior e inferior
+int valminmax(int *num, int *liminf, int *limsup);         //validar un numero en base a un limite superior e inferior
 void menu();
 
 char valrepetir(char si, char no);
