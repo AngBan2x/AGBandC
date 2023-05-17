@@ -22,13 +22,13 @@ void main(){
     printf("\n");
 
     llenarmatriz(mat2);
-    printf("La segunda matriz es: \n\n");
+    printf("\nLa segunda matriz es: \n\n");
     impmat(mat2);
 
     //ahora, la suma de las dos matrices
 
     summat(mat1, mat2, matr);
-    printf("La matriz resultante es: \n\n");
+    printf("\nLa matriz resultante es: \n\n");
     impmat(matr);
 }
 
@@ -43,7 +43,7 @@ void summat(float m1[][dim],float m2[][dim], float res[][dim]){
 void impmat(float mat[][dim]){
     for(int i=0; i<dim; i++){
         for(int j=0; j<dim; j++){
-            printf("%f\t", mat[i][j]);
+            printf("%g\t", mat[i][j]);
         }
         printf("\n");
     }
