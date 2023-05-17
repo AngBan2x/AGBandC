@@ -11,7 +11,6 @@ typedef struct{
 }tarjeta; //este struct guardara los arreglos
 
 typedef tarjeta arr_tarjetas[3]; //esta va a ser la estructura principal, un arreglo de structs que tienen arreglos como campo
-typedef char gop[2]; //ganador o perdedor
 
 //declaracion de los prototipos
 int valopcion(int var, int opcion1, int opcion2); //funcion que valida una de dos opciones
