@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdio_ext.h>
 #define tam 1000
 
 //Estructuras
@@ -81,7 +82,7 @@ void mostrar_menu() {
                     printf("6 - VOLVER AL MENU ANTERIOR\n");
                     printf("\nINDIQUE EL TIPO DE CONSULTA QUE VA A REALIZAR: ");
                     scanf("%d", &i);
-                    fflush(stdin);
+                    __fpurge(stdin);
                     switch (i) {
                         case 1:
                             filtrar_cedula(vector_archivo, dim);
@@ -124,7 +125,6 @@ void mostrar_menu() {
                 printf("OPCION INVALIDA.\n");
                 break;
         }
-
     } while (n!=5);
 }
 
@@ -142,9 +142,7 @@ void leer_datos_archivo(FILE *pf,int *dim) {
         }
         *dim=i;
         fclose(pf);
-
     }
-
 }
 
 void cargar_datos_archivo(struct CLIENTE vector_archivo[],int dim){
@@ -156,7 +154,6 @@ void cargar_datos_archivo(struct CLIENTE vector_archivo[],int dim){
             fprintf(pf,"%-10d\t\t%s %s\t\t%-10s\t\t%-10s\t\t%-10d\t\t%d-%d-%d\n",vector_archivo[i].cedula, vector_archivo[i].nombre,
                     vector_archivo[i].apellido, vector_archivo[i].departamento, vector_archivo[i].cargo, vector_archivo[i].sueldo,
                     vector_archivo[i].f.anio, vector_archivo[i].f.mes, vector_archivo[i].f.dia);
-
         }
         printf("DATOS GUARDADOS CORRECTAMENTE EN EL ARCHIVO.\n");
     }
@@ -167,49 +164,49 @@ void crear_trabajador(struct CLIENTE vector_archivo[],int* dim){
     char letra;
     printf("\nINDIQUE LA CANTIDAD DE USUARIOS QUE DESEA REGISTRAR: ");
     scanf("%d",&n);
-    fflush(stdin);
+    __fpurge(stdin);
 
     i=*dim;
     f=((*dim)+n);
 
     for (i;i<f;i++) {
-        if(n>1) printf("\nEMPLEADO #%d \n\n", n);
+        if(n>1) printf("\nEMPLEADO #%d \n\n", i+1);
 
         printf("Ingrese el numero de cedula: ");
         scanf("%d", &vector_archivo[i].cedula);
-        fflush(stdin);
+        __fpurge(stdin);
 
         printf("Ingrese el nombre del cliente: ");
         scanf("%s",vector_archivo[i].nombre);
-        fflush(stdin);
+        __fpurge(stdin);
 
         printf("Ingrese el apellido del cliente: ");
         scanf("%s", vector_archivo[i].apellido);
-        fflush(stdin);
+        __fpurge(stdin);
 
         printf("\nDepartamentos disponibles:\n\n- rrhh\n- consultor\n- diseno\n- produccion\n- calidad\n- distribucion\n\nSeleccione un departamento: ");
         scanf("%s", vector_archivo[i].departamento);
-        fflush(stdin);
+        __fpurge(stdin);
 
         printf("\nCargos disponibles:\n\n- gerente\n- supervisor\n- analista\n- disenador\n- desarrollador\n- auditor\n\nSeleccione un cargo: ");
         scanf("%s", vector_archivo[i].cargo);
-        fflush(stdin);
+        __fpurge(stdin);
 
         printf("Inserte el sueldo del trabajador: ");
         scanf("%i", &vector_archivo[i].sueldo);
-        fflush(stdin);
+        __fpurge(stdin);
 
         printf("Inserte el agno en el que ingreso: ");
         scanf("%d", &vector_archivo[i].f.anio);
-        fflush(stdin);
+        __fpurge(stdin);
 
         printf("Inserte el mes en el que ingreso: ");
         scanf("%d", &vector_archivo[i].f.mes);
-        fflush(stdin);
+        __fpurge(stdin);
 
         printf("Inserte el dia en el que ingreso: ");
         scanf("%d", &vector_archivo[i].f.dia);
-        fflush(stdin);
+        __fpurge(stdin);
     }
     (*dim)=(*dim)+n;
     printf("DATOS RECIBIDOS.\n");
@@ -239,7 +236,7 @@ void filtrar_cedula(struct CLIENTE vector_archivo[],int dim) {
 
     printf("\nINGRESE EL NUMERO DE CEDULA QUE VA A CONSULTAR: ");
     scanf("%d",&consulta_ci);
-    fflush(stdin);
+    __fpurge(stdin);
 
     pos = mostrar_posicion_cedula(vector_archivo,&dim, consulta_ci);
 
@@ -247,11 +244,9 @@ void filtrar_cedula(struct CLIENTE vector_archivo[],int dim) {
         printf("\nESTOS SON LOS DATOS DEL CEDULA SOLICITADA:\n%d %s %s %s %s %d %d-%d-%d\n", vector_archivo[pos].cedula, vector_archivo[pos].nombre,
                vector_archivo[pos].apellido, vector_archivo[pos].departamento, vector_archivo[pos].cargo,
                vector_archivo[pos].sueldo, vector_archivo[pos].f.anio, vector_archivo[pos].f.mes, vector_archivo[pos].f.dia);
-
     }
     else {
         printf("CEDULA NO ENCONTRADA\n");
-
     }
 }
 
@@ -260,9 +255,9 @@ void departamento(struct CLIENTE vector_archivo[],int dim) {
     char j, seguir;
     FILE *ps;
 
-    printf("\nINGRESE EL NUMERO DEL DEPERTAMENTO A CONSULTOR\n1: RRHH\n2: CONSULTOR\n3: DISENO\n4: PRODUCCION\n5: CALIDAD\n6: DISTRIBUCION:\n7: VOLVER \n" );
+    printf("\nDEPARTAMENTOS A CONSULTAR DISPONIBLES: \n\n1: RRHH\n2: CONSULTOR\n3: DISENO\n4: PRODUCCION\n5: CALIDAD\n6: DISTRIBUCION:\n7: VOLVER \n\nINGRESE EL NUMERO DEL DEPARTAMENTO A CONSULTAR: " );
     scanf("%d", &n);
-    fflush(stdin);
+    __fpurge(stdin);
     if (n==7){
         return;
     }
@@ -274,9 +269,9 @@ void departamento(struct CLIENTE vector_archivo[],int dim) {
             n = aux;
         }
     }
-    printf("\nDeseas generar un archivo de esta consulta? (s/n): \n");
+    printf("\nDeseas generar un archivo de esta consulta? (s/n): ");
     scanf("%c", &j);
-    fflush(stdin);
+    __fpurge(stdin);
 
 
     if (siono(j, 's', 'n') == 's') {
@@ -300,23 +295,16 @@ void departamento(struct CLIENTE vector_archivo[],int dim) {
         fclose(ps);
 
     } else {
-
-
         for (i = 0; i < dim; i++) {
             if (strcmp(vector_archivo[i].departamento, vector_departamento[n - 1]) == 0) {
                 printf("\n%d %s %s %s\n", vector_archivo[i].cedula,vector_archivo[i].nombre,vector_archivo[i].apellido, vector_archivo[i].departamento);
                 n_trab++;
                 acum_sueldo += vector_archivo[i].sueldo;
             }
-
         }
     }
     printf("\nNumero de trabajadores pertenecientes al departamento: %d\n", n_trab);
     printf("Sueldo total del departamento: %i\n", acum_sueldo);
-
-
-
-
 }
 
 void cargo(struct CLIENTE vector_archivo[],int dim) {
@@ -324,9 +312,9 @@ void cargo(struct CLIENTE vector_archivo[],int dim) {
     char j, seguir;
     FILE *ps;
 
-    printf("\nINGRESE EL CARGO A CONSULTAR:\n1: GERENTE\n2: SUPERVISOR\n3: ANALISTA\n4: DISENADOR\n5: DESARROLADOR\n6: AUDITOR\n7: VOLVER \n" );
+    printf("\nCARGOS A CONSULTAR DISPONIBLES: \n\n1: GERENTE\n2: SUPERVISOR\n3: ANALISTA\n4: DISENADOR\n5: DESARROLADOR\n6: AUDITOR\n7: VOLVER \n\nINGRESE EL CARGO A CONSULTAR: " );
     scanf("%d", &n);
-    fflush(stdin);
+    __fpurge(stdin);
     if (n==7){
         return;
     }
@@ -339,9 +327,9 @@ void cargo(struct CLIENTE vector_archivo[],int dim) {
         }
     }
 
-    printf("\nDeseas generar un archivo de esta consulta?(s/n)\n");
+    printf("\nDeseas generar un archivo de esta consulta? (s/n): ");
     scanf("%c", &j);
-    fflush(stdin);
+    __fpurge(stdin);
 
     if (siono(j, 's', 'n') == 's') {
         ps = fopen("cargo.dat", "w");
@@ -380,24 +368,26 @@ void cargo(struct CLIENTE vector_archivo[],int dim) {
 
 
 void mayor_sueldo(struct CLIENTE vector_archivo[],int dim){
-    int aux,p;
+    int aux,i,p;
     aux = vector_archivo[0].sueldo;
-    for(int i=0; i<dim; i++){
+    for(i=1; i<dim; i++){
         if(aux < vector_archivo[i].sueldo){
             aux = vector_archivo[i].sueldo;
-            p=i;}
+            p = i;
+        }
     }
 
     printf("%s %s, C.I. %d, es el sueldo mayor con: %d\n",vector_archivo[p].nombre,vector_archivo[p].apellido,vector_archivo[p].cedula,vector_archivo[p].sueldo);
 }
 
 void menor_sueldo(struct CLIENTE vector_archivo[],int dim){
-    int aux,p;
+    int aux,p,i;
     aux = vector_archivo[0].sueldo;
-    for(int i=0; i<dim; i++){
-        if(aux > vector_archivo[i].sueldo)
+    for(i=1; i<dim; i++){
+        if(aux > vector_archivo[i].sueldo) {
             aux = vector_archivo[i].sueldo;
-            p=i;
+            p = i;
+        }
     }
 
     printf("%s %s, C.I. %d, es el sueldo menor con : %d\n",vector_archivo[p].nombre, vector_archivo[p].apellido, vector_archivo[p].cedula ,vector_archivo[p].sueldo);
@@ -407,98 +397,98 @@ void modificar_trabajador(struct CLIENTE vector_archivo[],int dim) {
     int n,pos,i;
     char letra,band=true;
 
-    printf("\nIngrese el numero de cedula a modificar:\n");
+    printf("\nIngrese el numero de cedula a modificar: ");
     scanf("%d", &n);
-    fflush(stdin);
+    __fpurge(stdin);
     pos=mostrar_posicion_cedula(vector_archivo,&dim,n);
 
     if (pos>=0) {
         printf("\nCEDULA ENCONTRADA ESTOS SON SUS DATOS:\n\n%d %s %s %s %s %d %d-%d-%d\n", vector_archivo[pos].cedula, vector_archivo[pos].nombre,vector_archivo[pos].apellido,
                vector_archivo[pos].departamento, vector_archivo[pos].cargo,vector_archivo[pos].sueldo, vector_archivo[pos].f.anio, vector_archivo[pos].f.mes, vector_archivo[pos].f.dia);
         do {
-            printf("\nINDIQUE QUE DESEA MODIFICAR:\n1: NOMBRE\n2: APELLIDO\n3: DEPARTAMENTO\n4: CARGO\n5: SUELDO\n6: FECHA-INGRESO\n7: TODOS-LOS-CAMPOS\n8: SALIR\n");
+            printf("\nDATOS MODIFICABLES:\n\n1: NOMBRE\n2: APELLIDO\n3: DEPARTAMENTO\n4: CARGO\n5: SUELDO\n6: FECHA-INGRESO\n7: TODOS-LOS-CAMPOS\n8: SALIR\n\nINDIQUE QUE DESEA MODIFICAR: ");
             scanf("%d", &n);
             switch (n) {
                 case 1:
-                    printf("Ingrese el nombre del cliente: \n");
+                    printf("Ingrese el nombre del cliente: ");
                     scanf("%s", vector_archivo[pos].nombre);
-                    fflush(stdin);
+                    __fpurge(stdin);
                     break;
 
                 case 2:
-                    printf("Ingrese el apellido del cliente: \n");
+                    printf("Ingrese el apellido del cliente: ");
                     scanf("%s", vector_archivo[pos].apellido);
-                    fflush(stdin);
+                    __fpurge(stdin);
                     break;
 
                 case 3:
-                    printf("Ingrese el departamento (rrhh,consultoria, diseno, produccion, calidad, distribucion) \n");
+                    printf("\nDepartamentos disponibles:\n\n- rrhh\n- consultor\n- diseno\n- produccion\n- calidad\n- distribucion\n\nSeleccione un departamento: ");
                     scanf("%s", vector_archivo[pos].departamento);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
                     break;
 
                 case 4:
-                    printf("Ingrese el cargo (gerente, supervisor, analista, disenador, desarrollador, auditor) \n");
+                    printf("\nCargos disponibles:\n\n- gerente\n- supervisor\n- analista\n- disenador\n- desarrollador\n- auditor\n\nSeleccione un cargo: ");
                     scanf("%s", vector_archivo[pos].cargo);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
                     break;
 
                 case 5:
-                    printf("Inserte el sueldo del trabajador: \n");
+                    printf("Inserte el sueldo del trabajador: ");
                     scanf("%i", &vector_archivo[pos].sueldo);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
                     break;
 
                 case 6:
-                    printf("Inserte el agno en el que ingreso: \n");
+                    printf("Inserte el agno en el que ingreso: ");
                     scanf("%d", &vector_archivo[pos].f.anio);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Inserte el mes en el que ingreso: \n");
+                    printf("Inserte el mes en el que ingreso: ");
                     scanf("%d", &vector_archivo[pos].f.mes);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Inserte el dia en el que ingreso \n");
+                    printf("Inserte el dia en el que ingreso ");
                     scanf("%d", &vector_archivo[pos].f.dia);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
                     break;
 
                 case 7:
-                    printf("Ingrese el nombre del cliente: \n");
+                    printf("Ingrese el nombre del cliente: ");
                     scanf("%s", vector_archivo[i].nombre);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Ingrese el apellido del cliente: \n");
+                    printf("Ingrese el apellido del cliente: ");
                     scanf("%s", vector_archivo[i].apellido);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Ingrese el departamento (rrhh,consultoria, diseno, produccion, calidad, distribucion) \n");
+                    printf("\nDepartamentos disponibles:\n\n- rrhh\n- consultor\n- diseno\n- produccion\n- calidad\n- distribucion\n\nSeleccione un departamento: ");
                     scanf("%s", vector_archivo[i].departamento);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Ingrese el cargo (gerente, supervisor, analista, disenador, desarrollador, auditor) \n");
+                    printf("\nCargos disponibles:\n\n- gerente\n- supervisor\n- analista\n- disenador\n- desarrollador\n- auditor\n\nSeleccione un cargo: ");
                     scanf("%s", vector_archivo[i].cargo);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Inserte el sueldo del trabajador: \n");
+                    printf("Inserte el sueldo del trabajador: ");
                     scanf("%i", &vector_archivo[i].sueldo);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Inserte el agno en el que ingreso: \n");
+                    printf("Inserte el agno en el que ingreso: ");
                     scanf("%d", &vector_archivo[i].f.anio);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Inserte el mes en el que ingreso: \n");
+                    printf("Inserte el mes en el que ingreso: ");
                     scanf("%d", &vector_archivo[i].f.mes);
-                    fflush(stdin);
+                    __fpurge(stdin);
 
-                    printf("Inserte el dia en el que ingreso \n");
+                    printf("Inserte el dia en el que ingreso ");
                     scanf("%d", &vector_archivo[i].f.dia);
-                    fflush(stdin);
+                    __fpurge(stdin);
                     break;
 
                 case 8:
@@ -522,9 +512,9 @@ void eliminar_trabajador(struct CLIENTE vector_archivo[],int* dim) {
     int n, pos,i;
     char seguir;
 
-    printf("\nIngrese el numero de cedula del trabajador que va a despedir:\n");
+    printf("\nIngrese el numero de cedula del trabajador que va a despedir: ");
     scanf("%d", &n);
-    fflush(stdin);
+    __fpurge(stdin);
     pos = mostrar_posicion_cedula(vector_archivo, dim, n);
 
     if (pos >= 0) {
@@ -533,21 +523,21 @@ void eliminar_trabajador(struct CLIENTE vector_archivo[],int* dim) {
                vector_archivo[pos].apellido, vector_archivo[pos].departamento, vector_archivo[pos].cargo);
 
         scanf("%c", &seguir);
-        fflush(stdin);
+        __fpurge(stdin);
 
         if (siono(seguir,'s','n') == 's') {
             printf("MOTIVOS:\n\n1: TRASLADO\n2: RENUNCIA\n3: DESPIDO\n4: OTRO\n\nIndique un motivo de retiro: ");
             scanf("%d",&i);
-            fflush(stdin);
-            printf("INDIQUE EL AGNO DEL RETIRO");
+            __fpurge(stdin);
+            printf("INDIQUE EL AGNO DEL RETIRO: ");
             scanf("%d",&a.f.anio);
-            fflush(stdin);
-            printf("INDIQUE EL MES DEL RETIRO");
+            __fpurge(stdin);
+            printf("INDIQUE EL MES DEL RETIRO: ");
             scanf("%d",&a.f.mes);
-            fflush(stdin);
-            printf("INDIQUE EL DIA DEL RETIRO");
+            __fpurge(stdin);
+            printf("INDIQUE EL DIA DEL RETIRO: ");
             scanf("%d",&a.f.dia);
-            fflush(stdin);
+            __fpurge(stdin);
 
             FILE *ps = fopen("extrabajadores.dat", "a");
             if (ps != NULL) {
@@ -574,6 +564,8 @@ char siono(char var,char si,char no){
         if(var != si && var != no) {
             printf("No es una respuesta valida! Tiene que ser 's' o 'n' (sin comillas): ");
             scanf("%s",&var);
+            __fpurge(stdin);
+
         }
     } while(var != si && var != no);
     return var;
@@ -583,53 +575,7 @@ int validar_opcion(int n){
     do {
         printf("\nINGRESE UNA OPCION VALIDA DEL 1 AL 7: \n" );
         scanf("%d",&n);
-        fflush(stdin);
+        __fpurge(stdin);
     } while (n!=7 && n!=6 && n!=5 && n!=4 && n!=3 && n!=2 && n!=1);
     return n;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
