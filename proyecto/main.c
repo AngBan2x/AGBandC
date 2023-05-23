@@ -368,7 +368,7 @@ void cargo(struct CLIENTE vector_archivo[],int dim) {
 
 
 void mayor_sueldo(struct CLIENTE vector_archivo[],int dim){
-    int aux,i,p;
+    int aux,i,p=0;
     aux = vector_archivo[0].sueldo;
     for(i=1; i<dim; i++){
         if(aux < vector_archivo[i].sueldo){
@@ -381,7 +381,7 @@ void mayor_sueldo(struct CLIENTE vector_archivo[],int dim){
 }
 
 void menor_sueldo(struct CLIENTE vector_archivo[],int dim){
-    int aux,p,i;
+    int aux,p=0,i;
     aux = vector_archivo[0].sueldo;
     for(i=1; i<dim; i++){
         if(aux > vector_archivo[i].sueldo) {
